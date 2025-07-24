@@ -1,0 +1,116 @@
+{
+  "ACTIVE_TOPIC": "sector_transporte",
+  "TOPICS": {
+    "ciberseguridad": {
+      "DATA_SOURCE_CONFIG": {
+        "ACTIVE_SOURCE": "API_SODA",
+        "API": {
+          "BASE_URL": "",
+          "API_KEY": ""
+        },
+        "LOCAL_FILE": {
+          "FILENAME": "Datos_Entrada_Secop.csv"
+        },
+        "SQL": {
+          "DB_TYPE": "mssql",
+          "HOST": "10.240.5.39",
+          "PORT": "1433",
+          "DATABASE": "BodegaCCE",
+          "USERNAME": "CCE.ManuelSaldarriaga",
+          "PASSWORD": "eQGJvX7qqPubnBsY&$@Ztof%Z",
+          "DRIVER": "ODBC Driver 17 for SQL Server",
+          "QUERY": "SELECT [Nombre Entidad]\n      ,[Nit Entidad]\n      ,[Departamento]\n      ,[Ciudad]\n      ,[Localización]\n      ,[Orden]\n      ,[Sector]\n      ,[Rama]\n      ,[Entidad Centralizada]\n      ,[Proceso de Compra]\n      ,[ID Contrato]\n      ,[Referencia del Contrato]\n      ,[Estado Contrato]\n      ,[Codigo de Categoria Principal]\n      ,[Descripcion del Proceso]\n      ,[Tipo de Contrato]\n      ,[Modalidad de Contratacion]\n      ,[Justificacion Modalidad de Contratacion]\n      ,[Fecha de Firma]\n      ,[Fecha de Inicio del Contrato]\n      ,[Fecha de Fin del Contrato]\n      ,[Fecha de Inicio de Ejecucion]\n      ,[Fecha de Fin de Ejecucion]\n      ,[Condiciones de Entrega]\n      ,[TipoDocProveedor]\n      ,[Documento Proveedor]\n      ,[Proveedor Adjudicado]\n      ,[Es Grupo]\n      ,[Es Pyme]\n      ,[Habilita Pago Adelantado]\n      ,[Liquidación]\n      ,[Obligación Ambiental]\n      ,[Obligaciones Postconsumo]\n      ,[Reversion]\n      ,[Origen de los Recursos]\n      ,[Destino Gasto]\n      ,[Valor del Contrato]\n      ,[Código BPIN]\n      ,[Anno BPIN]\n      ,[Saldo CDP]\n      ,[Saldo Vigencia]\n      ,[EsPostConflicto]\n      ,[URLProceso]\n      ,[Nombre Representante Legal]\n      ,[Nacionalidad Representante Legal]\n      ,[Domicilio Representante Legal]\n      ,[Tipo de Identificación Representante Legal]\n      ,[Identificación Representante Legal]\n      ,[Género Representante Legal]\n      ,[Presupuesto General de la Nacion – PGN]\n      ,[Codigo Entidad]\n      ,[Codigo Proveedor]\n      ,[Fecha Inicio Liquidacion]\n      ,[Fecha Fin Liquidacion]\n      ,[Objeto Contrato]\n      ,[Duracion_del_contrato]\n\nFROM [BodegaCCE].[OpenData].[SECOPII_Contratos_completa]\nWHERE [Fecha de Inicio del Contrato] IS NOT NULL\n  AND RIGHT([Fecha de Firma], 4) IN ('2020', '2021', '2022', '2023', '2024', '2025')\n  AND [Justificacion Modalidad de Contratacion] <> 'Servicios profesionales y apoyo a la gestión'\n  AND [Objeto Contrato] not like '%Servicios profesionales%'\n  AND [Objeto Contrato] not like '%Servicios personales%'\n  AND [Objeto Contrato] not like '%Servicios apoyo%'"
+        },
+        "API_SODA": {
+          "DOMAIN": "www.datos.gov.co",
+          "DATASET_ID": "jbjy-vk9h",
+          "SELECT_CLAUSE": "nombre_entidad, nit_entidad, departamento, ciudad, localizaci_n, orden, sector, rama, entidad_centralizada, proceso_de_compra, id_contrato, referencia_del_contrato, estado_contrato, codigo_de_categoria_principal, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, justificacion_modalidad_de, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, tipodocproveedor, documento_proveedor, proveedor_adjudicado, es_grupo, es_pyme, liquidaci_n, obligaci_n_ambiental, obligaciones_postconsumo, valor_del_contrato, espostconflicto, urlproceso, nombre_representante_legal, nacionalidad_representante_legal, domicilio_representante_legal, tipo_de_identificaci_n_representante_legal, identificaci_n_representante_legal, g_nero_representante_legal, ultima_actualizacion, codigo_entidad, codigo_proveedor, objeto_del_contrato, duraci_n_del_contrato",
+          "WHERE_CLAUSE": "fecha_de_firma >= '2020-01-01T00:00:00' AND caseless_not_one_of(`justificacion_modalidad_de`, '', 'Servicios profesionales y apoyo a la gestión')"
+        },
+        "CSV": {
+          "FILENAME": "Datos_Entrada_Secop.xlsx"
+        }
+      },
+      "TEXT_COLUMNS_TO_COMBINE": [
+        "objeto_del_contrato"
+      ],
+      "FILTRADO_UNSPSC": {
+        "descripcion": "Códigos de la Familia UNSPSC (Estándar de Códigos de Productos y Servicios de Naciones Unidas) para el filtrado inicial de contratos.",
+        "CODIGOS_DE_INTERES": [
+          8111,
+          8116,
+          4222,
+          4223
+        ],
+        "COLUMNA_UNSPSC": "codigo_de_categoria_principal"
+      },
+      "CLASSIFIER_MODEL": "RandomForestClassifier",
+      "PREDICTION_THRESHOLD": 0.85,
+      "FINETUNING": {
+        "NUM_EPOCHS": 2,
+        "BATCH_SIZE": 32,
+        "LEARNING_RATE": 3e-05,
+        "WARMUP_RATIO": 0.1
+      },
+      "ACTIVE_LEARNING": {
+        "UNCERTAINTY_THRESHOLD_LOW": 0.8,
+        "UNCERTAINTY_THRESHOLD_HIGH": 0.9,
+        "MAX_SAMPLES": 300
+      }
+    },
+    "sector_transporte": {
+      "descripcion": "Contratos relacionados con servicios de transporte, no incluye obras de infraestructura de transporte",
+      "contexto": "EMAE - Atencion PQRS",
+      "DATA_SOURCE_CONFIG": {
+        "ACTIVE_SOURCE": "LOCAL_FILE",
+        "API": {
+          "BASE_URL": "",
+          "API_KEY": "",
+          "QUERY": ""
+        },
+        "LOCAL_FILE": {
+          "FILENAME": "Datos_Entrada_Secop-0725.csv"
+        },
+        "SQL": {
+          "DB_TYPE": "postgresql",
+          "HOST": "",
+          "PORT": "",
+          "DATABASE": "",
+          "USERNAME": "",
+          "PASSWORD": "",
+          "DRIVER": "ODBC Driver 17 for SQL Server",
+          "QUERY": ""
+        }
+      },
+      "TEXT_COLUMNS_TO_COMBINE": [
+        "objeto_del_contrato"
+      ],
+      "FILTRADO_UNSPSC": {
+        "descripcion": "Códigos UNSPSC para este tema",
+        "CODIGOS_DE_INTERES": [
+          7810,
+          7811,
+          7814,
+          7818,
+          8310,
+          9315
+        ],
+        "COLUMNA_UNSPSC": "codigo_de_categoria_principal"
+      },
+      "CLASSIFIER_MODEL": "RandomForestClassifier",
+      "SIMILARITY_THRESHOLD": 0.7,
+      "PREDICTION_THRESHOLD": 0.85,
+      "FINETUNING": {
+        "NUM_EPOCHS": 2,
+        "BATCH_SIZE": 16,
+        "LEARNING_RATE": 3e-05,
+        "WARMUP_RATIO": 0.1
+      },
+      "ACTIVE_LEARNING": {
+        "UNCERTAINTY_THRESHOLD_LOW": 0.7,
+        "UNCERTAINTY_THRESHOLD_HIGH": 0.9,
+        "MAX_SAMPLES": 250
+      }
+    }
+  }
+}

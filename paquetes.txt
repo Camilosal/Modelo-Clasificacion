@@ -1,0 +1,42 @@
+# --- Framework Web y UI ---
+streamlit
+
+# --- Core de Ciencia de Datos y Machine Learning ---
+numpy<2.0  # Crítico: Evita breaking changes de la v2.
+pandas
+scikit-learn
+joblib
+
+# --- NLP y Modelos de Lenguaje (Hugging Face y spaCy) ---
+torch
+sentence-transformers
+spacy
+datasets
+accelerate==0.28.0  # Para optimizar entrenamiento en GPU/TPU
+
+# --- Visualización de Datos ---
+seaborn
+matplotlib
+
+# --- Conectividad y APIs ---
+requests
+sodapy
+
+# --- Conectores de Base de Datos ---
+# SQLAlchemy es el ORM, pero necesita drivers específicos.
+# Basado en tu código (utils.py), el sistema soporta PostgreSQL y SQL Server.
+SQLAlchemy
+psycopg2-binary  # Driver para PostgreSQL
+pyodbc          # Driver para SQL Server (usado por mssql+pyodbc)
+
+# --- Utilidades y Monitoreo ---
+tqdm   # Barras de progreso
+psutil  # Monitoreo de CPU/RAM
+pynvml # Monitoreo de GPU NVIDIA
+
+# --- Interacción con Archivos Excel ---
+openpyxl
+
+# NOTA: El modelo de lenguaje de spaCy no se instala con pip.
+# Ejecuta este comando por separado después de instalar los paquetes:
+# python -m spacy download es_core_news_lg
