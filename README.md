@@ -1,4 +1,4 @@
-# Sistema de Clasificación Inteligente de Contratos
+# Sistema de Clasificación Inteligente de Contratos Publicos
 
 Este sistema es una herramienta de inteligencia artificial diseñada para analizar, clasificar y aprender de grandes volúmenes de contratos. Utiliza un ciclo de **mejora continua** donde el conocimiento de un experto humano se utiliza para entrenar y refinar modelos de IA, logrando una clasificación cada vez más precisa y adaptada a la jerga de un tema específico.
 
